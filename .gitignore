@@ -1,0 +1,40 @@
+
+# Pulumi files
+*.bak
+*.tmp
+Pulumi.*
+.pulumi/
+
+# Go build artifacts
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Go modules
+vendor/
+go.sum
+go.mod
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Sensitive files (optional)
+.env
+*.pem
+*.key
+*.crt
+
+pulumi/flow-bank
