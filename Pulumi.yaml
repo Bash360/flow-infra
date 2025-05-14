@@ -1,0 +1,7 @@
+name: flow-bank
+description: flowbank ec2 instance
+runtime: go
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-go

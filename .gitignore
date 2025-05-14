@@ -2,7 +2,6 @@
 # Pulumi files
 *.bak
 *.tmp
-Pulumi.*
 .pulumi/
 
 # Go build artifacts
