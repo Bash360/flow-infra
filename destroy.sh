@@ -1,5 +1,6 @@
-set -e 
 #!/bin/bash
+set -e 
+
 
 
 
@@ -9,7 +10,7 @@ PULUMI_DIR="./pulumi"
 function destroyServer(){
 read -p "About to destroy server on $STACK Enter Y/N: " ANSWER
 case "$ANSWER"  in 
-   ([yY] | [yY][eE][sE])
+   [yY] | [yY][eE][sE])
     echo "Pulumi stack $STACK"
     echo "Deleting ec2..."
     cd "$PULUMI_DIR"
@@ -18,7 +19,7 @@ case "$ANSWER"  in
     exit 0
        ;;
 
-    ([nN] | [nN][oO])
+    [nN] | [nN][oO])
         echo "deleting cancelled"
         exit 0
         ;;
