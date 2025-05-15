@@ -10,16 +10,16 @@ function destroyServer(){
 read -p "About to destroy server on $STACK Enter Y/N: " ANSWER
 case "$ANSWER"  in 
    ([yY] | [yY][eE][sE])
-    echo "Pulumi stack $Stack"
+    echo "Pulumi stack $STACK"
     echo "Deleting ec2..."
-    cd $PULUMI_DIR
-    pulumi stack select $STACK
+    cd "$PULUMI_DIR"
+    pulumi stack select "$STACK"
     pulumi destroy --yes
     exit 0
        ;;
 
     ([nN] | [nN][oO])
-
+        echo "deleting cancelled"
         exit 0
         ;;
     *)
