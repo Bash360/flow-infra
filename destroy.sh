@@ -7,11 +7,11 @@ STACK="main"
 PULUMI_DIR="./pulumi"
 
 function destroyServer(){
-read -p "About to destroy server on main Enter Y/N: " ANSWER
+read -p "About to destroy server on $STACK Enter Y/N: " ANSWER
 case "$ANSWER"  in 
    ([yY] | [yY][eE][sE])
     echo "Pulumi stack $Stack"
-    echo "Deleting ec2"
+    echo "Deleting ec2..."
     cd $PULUMI_DIR
     pulumi stack select $STACK
     pulumi destroy --yes
@@ -33,8 +33,7 @@ esac
 echo "this program will destroy your ec2 instance"
  read -p "Type delete to proceed: " ANSWER
 
- if [ "$ANSWER" == "delete" ] 
-then 
+if [ "$ANSWER" == "delete" ]; then 
 
    destroyServer
 
