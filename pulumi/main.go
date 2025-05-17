@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 	"github.com/pulumi/pulumi-aws/sdk/v6/go/aws/ec2"
@@ -15,14 +16,28 @@ func main() {
 		log.Fatal(err)
 	}
 	pulumi.Run(func(ctx *pulumi.Context) error {
-	
+	    
+		
 		accessKey:=os.Getenv("AWS_ACCESS_KEY_ID")
 		accessSecret:=os.Getenv("AWS_SECRET_ACCESS_KEY")
 		region:=os.Getenv("AWS_REGION")
+		pubkeyLocation:=os.Getenv("KEY_LOCATION")
 
-		if accessKey == "" || accessSecret=="" || region =="" {
+		if accessKey == "" || accessSecret=="" || region =="" || pubkeyLocation =="" {
 			log.Fatal("missing environment variables")
 		}
+		pubkeyBytes, err:= os.ReadFile(os.Getenv("HOME")+ pubkeyLocation)
+
+		if err !=nil{
+         panic("unable to get public key "+err.Error())
+		}
+
+		 keyPair, err := ec2.NewKeyPair(ctx, "myKeyPair", &ec2.KeyPairArgs{
+            PublicKey: pulumi.String(strings.TrimSpace(string(pubkeyBytes))),
+        })
+        if err != nil {
+            return err
+        }
 		ami, err := ec2.LookupAmi(ctx, &ec2.LookupAmiArgs{
 			Filters: []ec2.GetAmiFilter{
 				{
@@ -58,6 +73,7 @@ func main() {
 			Ami:                   pulumi.String(ami.Id),
 			VpcSecurityGroupIds:   pulumi.StringArray{sg.ID()},
 			AssociatePublicIpAddress: pulumi.Bool(true),
+			KeyName: keyPair.KeyName,
 		})
 		if err != nil {
 			return err
