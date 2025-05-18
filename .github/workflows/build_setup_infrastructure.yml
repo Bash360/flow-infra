@@ -29,7 +29,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y ansible
       - name: Install Pulumi
-        run: 
+        run: |
           curl -fsSL https://get.pulumi.com | sh
           echo "$HOME/.pulumi/bin" >> $GITHUB_PATH
       - name: Run infra provisioning
