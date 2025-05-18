@@ -13,6 +13,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: check env
+        run: echo $PULUMI_ACCESS_TOKEN
+
       - name: Setup SSH keys
         run: |
           mkdir -p ~/.ssh
@@ -32,10 +35,9 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ansible
-      - name: Install Pulumi
-        run: |
-          curl -fsSL https://get.pulumi.com | sh
-          echo $PULUMI_ACCESS_TOKEN
+     
+      - name: Instal pulumi
+        uses: pulumi/actions@v5
       - name: Run infra provisioning
         run: bash ./build.sh
 
