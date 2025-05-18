@@ -2,19 +2,20 @@ name: Provision and set up server
 
 on:
   push:
-    branches: 
+    branches:
       - main
   workflow_dispatch: # manual trigger option
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: main  
-    env:
-        PULUMI_ACCESS_TOKEN: ${{ vars.PULUMI_ACCESS_TOKEN }}
-
+    environment: main
     steps:
       - uses: actions/checkout@v3
+    
+      - name: Debug env
+        run: |
+           echo "PULUMI_ACCESS_TOKEN: $PULUMI_ACCESS_TOKEN"
       - name: Setup SSH keys
         run: |
           mkdir -p ~/.ssh
@@ -28,15 +29,14 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.22'  # or whatever version you're using
+          go-version: "1.22" # or whatever version you're using
 
       - name: Install Ansible
         run: |
           sudo apt-get update
           sudo apt-get install -y ansible
-     
+
       - name: Instal pulumi
         uses: pulumi/actions@v5
       - name: Run infra provisioning
         run: bash ./build.sh
-
