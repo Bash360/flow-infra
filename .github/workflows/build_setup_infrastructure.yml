@@ -35,6 +35,7 @@ jobs:
       - name: Install Pulumi
         run: |
           curl -fsSL https://get.pulumi.com | sh
+          echo $PULUMI_ACCESS_TOKEN
       - name: Run infra provisioning
         run: bash ./build.sh
 
