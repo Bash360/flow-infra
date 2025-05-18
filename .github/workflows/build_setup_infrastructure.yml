@@ -8,14 +8,15 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
     environment: main
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-    
+
       - name: Debug env
         run: |
-           echo "PULUMI_ACCESS_TOKEN: $PULUMI_ACCESS_TOKEN"
+          echo "PULUMI_ACCESS_TOKEN: $PULUMI_ACCESS_TOKEN"
+          echo "AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID"
       - name: Setup SSH keys
         run: |
           mkdir -p ~/.ssh
