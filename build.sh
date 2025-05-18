@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e 
 
+set -x
+
 STACK="main"
 PULUMI_DIR="./pulumi"
 ANSIBLE_DIR="./ansible"
