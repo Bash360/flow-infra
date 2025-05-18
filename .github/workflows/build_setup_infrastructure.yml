@@ -12,8 +12,7 @@ jobs:
     environment: main  
     env:
         PULUMI_ACCESS_TOKEN: ${{ vars.PULUMI_ACCESS_TOKEN }}
-        run: |
-          echo "PULUMI_ACCESS_TOKEN: $PULUMI_ACCESS_TOKEN"
+
     steps:
       - uses: actions/checkout@v3
       - name: Setup SSH keys
