@@ -1,0 +1,28 @@
+name: Provision and set up server
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: main  
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup SSH keys
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/ec2-key
+          echo "$SSH_PUBLIC_KEY" > ~/.ssh/ec2-key.pub
+          chmod 600 ~/.ssh/ec2-key
+          chmod 644 ~/.ssh/ec2-key.pub
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIV_KEY }}
+          SSH_PUBLIC_KEY: ${{ secrets.SSH_PUB_KEY }}
+
+      - name: Run infra provisioning
+        run: bash ./build.sh
+
