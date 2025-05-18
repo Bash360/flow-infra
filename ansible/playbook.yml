@@ -1,0 +1,26 @@
+- name: Setup Docker on virtual flow_server
+  hosts: flow_server
+  become: true
+  gather_facts: false
+  tasks:
+  
+    - name: Wait for the instance to be ready for SSH
+      ansible.builtin.wait_for_connection:
+        timeout: 300  # Wait up to 5 minutes
+        delay: 10     # Wait 10s before first check
+
+
+    - name: update apt cache
+      ansible.builtin.apt:
+         update_cache: yes
+    
+    - name: Install Docker
+      ansible.builtin.apt:
+         name: docker.io
+         state: present
+
+    - name: Ensure docker service is running
+      ansible.builtin.service:
+        name: docker 
+        state: started
+        enabled: yes

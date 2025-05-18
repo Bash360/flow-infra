@@ -8,6 +8,9 @@ STACK="main"
 PULUMI_DIR="./pulumi"
 
 function destroyServer(){
+local ATTEMPTS=0
+local MAX_ATTEMPTS=2
+while ((ATTEMPTS < MAX_ATTEMPTS)); do
 read -p "About to destroy server on $STACK Enter Y/N: " ANSWER
 case "$ANSWER"  in 
    [yY] | [yY][eE][sE])
@@ -24,10 +27,15 @@ case "$ANSWER"  in
         exit 0
         ;;
     *)
-        echo "Please enter y/yes or n/no"
+        ((ATTEMPTS++))
         ;;
 
 esac
+
+done
+
+echo "Wrong input trials exceeded"
+exit 1
    
 }
 
