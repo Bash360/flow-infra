@@ -23,6 +23,10 @@ jobs:
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIV_KEY }}
           SSH_PUBLIC_KEY: ${{ secrets.SSH_PUB_KEY }}
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'  # or whatever version you're using
 
       - name: Install Ansible
         run: |
