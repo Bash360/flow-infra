@@ -10,7 +10,6 @@ export PRIV_KEY_LOCATION="$HOME/.ssh/ec2-key"
 export USER=ubuntu
 
 function createServer(){
-echo $PULUMI_ACCESS_TOKEN
 echo "Pulumi stack $STACK"
 echo "Provisioning infrastructure..."
 
