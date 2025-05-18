@@ -10,12 +10,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: main  
+    env:
+        PULUMI_ACCESS_TOKEN: ${{ vars.PULUMI_ACCESS_TOKEN }}
+        run: |
+          echo "PULUMI_ACCESS_TOKEN: $PULUMI_ACCESS_TOKEN"
     steps:
       - uses: actions/checkout@v3
-
-      - name: check env
-        run: echo $PULUMI_ACCESS_TOKEN
-
       - name: Setup SSH keys
         run: |
           mkdir -p ~/.ssh
