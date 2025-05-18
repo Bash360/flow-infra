@@ -21,12 +21,12 @@ func main() {
 		accessKey:=os.Getenv("AWS_ACCESS_KEY_ID")
 		accessSecret:=os.Getenv("AWS_SECRET_ACCESS_KEY")
 		region:=os.Getenv("AWS_REGION")
-		pubkeyLocation:=os.Getenv("KEY_LOCATION")
+		pubkeyLocation:=os.Getenv("PUB_KEY_LOCATION")
 
 		if accessKey == "" || accessSecret=="" || region =="" || pubkeyLocation =="" {
 			log.Fatal("missing environment variables")
 		}
-		pubkeyBytes, err:= os.ReadFile(os.Getenv("HOME")+ pubkeyLocation)
+		pubkeyBytes, err:= os.ReadFile(pubkeyLocation)
 
 		if err !=nil{
          panic("unable to get public key "+err.Error())
@@ -62,6 +62,14 @@ func main() {
 					CidrBlocks: pulumi.StringArray{pulumi.String("0.0.0.0/0")},
 				},
 			},
+			 Egress: ec2.SecurityGroupEgressArray{
+        &ec2.SecurityGroupEgressArgs{
+            Protocol:   pulumi.String("-1"), 
+            FromPort:   pulumi.Int(0),
+            ToPort:     pulumi.Int(0),
+            CidrBlocks: pulumi.StringArray{pulumi.String("0.0.0.0/0")},
+        },
+    },
 		})
 		if err != nil {
 			return err
@@ -78,8 +86,7 @@ func main() {
 		if err != nil {
 			return err
 		}
-
-		ctx.Export("instanceId", instance.ID())
+		
 		ctx.Export("publicIp", instance.PublicIp)
 		return nil
 	})
