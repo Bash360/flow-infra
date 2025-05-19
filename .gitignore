@@ -15,8 +15,6 @@ bin/
 
 # Go modules
 vendor/
-go.sum
-go.mod
 
 # IDE/editor files
 .vscode/
