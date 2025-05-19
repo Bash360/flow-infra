@@ -30,9 +30,11 @@ jobs:
 
       - name: Set up Pulumi
         uses: pulumi/actions@v5
-        with:
-          command: preview
-          stack-name:  flow-bank/main
+      - name: run pulumi preview
+        working-directory: pulumi
+        run: |
+          pulumi stack select main
+          pulumi preview
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       - name: Verify preview succeeded
