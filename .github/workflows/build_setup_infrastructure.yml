@@ -8,7 +8,7 @@ on:
     branches:
       - main
       - dev
-  workflow_dispatch: # manual trigger option
+  workflow_dispatch: 
 
 jobs:
   preview_and_lint:
