@@ -50,9 +50,8 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
-          PUB_KEY_LOCATION: "$HOME/.ssh/ec2-key.pub"
-          PRIV_KEY_LOCATION: "$HOME/.ssh/ec2-key"
-          USER: ubuntu
+          PUB_KEY_LOCATION: ${{ env.HOME }}/.ssh/ec2-key.pub
+
 
       - name: Verify preview succeeded
         run: echo "Pulumi preview ran successfully!"
