@@ -57,6 +57,7 @@ jobs:
         run: echo "Pulumi preview ran successfully!"
 
       - name: Lint Ansible Playbooks
+        working-directory: pulumi
         run: |
           ansible-playbook --syntax-check playbook.yml
 
