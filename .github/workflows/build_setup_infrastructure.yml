@@ -48,8 +48,6 @@ jobs:
 
       - name: Instal pulumi
         uses: pulumi/actions@v5
-
-      - name: Login to pulumi
-        run: pulumi login --token ${{ secrets.PULUMI_ACCESS_TOKEN }}
+        
       - name: Run infra provisioning
         run: bash ./build.sh
