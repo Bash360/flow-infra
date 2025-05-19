@@ -13,6 +13,8 @@ on:
 jobs:
   preview_and_lint:
     runs-on: ubuntu-latest
+    environment:
+      name: main
     if: github.event_name == 'pull_request' && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
     steps:
       - uses: actions/checkout@v3
@@ -31,6 +33,8 @@ jobs:
         with:
           command: preview
           stack-name: main
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
       - name: Verify preview succeeded
         run: echo "Pulumi preview ran successfully!"
 
