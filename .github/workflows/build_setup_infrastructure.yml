@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: main
-    if: github.event_name == 'pull_request' && github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'
+    if: github.event_name == 'pull_request' && (github.base_ref == 'main' || github.base_ref == 'dev')
     steps:
       - uses: actions/checkout@v3
       - name: Set up Go
@@ -45,7 +45,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: preview_and_lint
-    if: github.ref == 'refs/heads/main'
+    if: github.base_ref == 'main'
     environment:
       name: main
     steps:
