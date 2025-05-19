@@ -10,11 +10,13 @@ import (
 	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
 )
 
-func main() {
-	err:=godotenv.Load()
-	if err !=nil{
-		log.Fatal(err)
+func init(){
+		err := godotenv.Load()
+	if err != nil {
+		log.Println("No .env file found or loaded; relying on existing environment variables.")
 	}
+}
+func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 	    
 		
