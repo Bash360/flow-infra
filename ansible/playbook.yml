@@ -2,6 +2,9 @@
   hosts: flow_server
   become: true
   gather_facts: false
+  vars:
+    container_name: flow-bank
+    image_name: ghcr.io/flow-bank:latest
   tasks:
   
     - name: Wait for the instance to be ready for SSH
@@ -24,3 +27,39 @@
         name: docker 
         state: started
         enabled: yes
+
+    - name: Login to GitHub Container Registry
+      community.docker.docker_login:
+       registry_url: ghcr.io
+       username: "{{ lookup('env', 'GTH_USERNAME') }}" 
+       password: "{{ lookup('env', 'GTH_ACCESS_TOKEN') }}" 
+
+    - name: Create placeholder app container
+      docker_container:
+       name: "{{container_name}}"
+       image: "{{image_name}}"
+       restart_policy: always
+       state: stopped
+       env:
+          NODE_ENV: "{{ lookup('env', 'NODE_ENV') }}"
+          PORT: "{{ lookup('env', 'PORT') }}"
+          DB_URI: "{{ lookup('env', 'DB_URI') }}"
+          JWT_SECRET: "{{ lookup('env', 'JWT_SECRET') }}"
+          USD_RESERVE: "{{ lookup('env', 'USD_RESERVE') }}"
+          NGN_RESERVE: "{{ lookup('env', 'NGN_RESERVE') }}"
+          ADMIN_PASSWORD: "{{ lookup('env', 'ADMIN_PASSWORD') }}"
+          ADMIN_EMAIL: "{{ lookup('env', 'ADMIN_EMAIL') }}"
+       ports:
+          - "3000:3000"
+       pull: false   # Don't fail if image doesn't exist yet
+       recreate: yes
+      ignore_errors: true  # in case image doesn't exist yet
+
+    - name: Run Watchtower to auto-update containers
+      docker_container:
+        name: watchtower
+        image: containrrr/watchtower
+        restart_policy: always
+        command: "{{container_name}} --cleanup --interval 10"
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
