@@ -113,3 +113,5 @@ jobs:
           NGN_RESERVE: ${{ secrets.NGN_RESERVE }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          GTH_ACCESS_TOKEN: ${{ secrets.GTH_ACCESS_TOKEN }}
+          GTH_USERNAME: ${{ secrets.GTH_USERNAME }}
