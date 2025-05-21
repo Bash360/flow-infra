@@ -34,7 +34,7 @@
        username: "{{ lookup('env', 'GTH_USERNAME') }}" 
        password: "{{ lookup('env', 'GTH_ACCESS_TOKEN') }}" 
 
-    - name: Create placeholder app container
+    - name: Create app container and run
       docker_container:
        name: "{{container_name}}"
        image: "{{image_name}}"
