@@ -46,7 +46,7 @@
           - "3000:3000"
        pull: false   # Don't fail if image doesn't exist yet
        recreate: yes
-       ignore_errors: yes  # in case image doesn't exist yet
+      ignore_errors: true  # in case image doesn't exist yet
 
     - name: Run Watchtower to auto-update containers
       docker_container:
