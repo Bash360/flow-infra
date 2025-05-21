@@ -27,6 +27,7 @@ echo "Setting up virtual server"
 cd "$ANSIBLE_DIR"
 ansible-playbook -i inventory.yml playbook.yml
 echo "Server setup done"
+echo "application running"
 }
 
 
