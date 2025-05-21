@@ -4,7 +4,7 @@
   gather_facts: false
   vars:
     container_name: flow-bank
-    image_name: ghcr.io/killbash/flow-bank:latest
+    image_name: ghcr.io/flow-bank:latest
   tasks:
   
     - name: Wait for the instance to be ready for SSH
