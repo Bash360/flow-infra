@@ -1,9 +1,6 @@
 #!/bin/bash
 set -e 
 
-
-
-
 STACK="main"
 PULUMI_DIR="./pulumi"
 
