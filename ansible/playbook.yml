@@ -60,6 +60,9 @@
         name: watchtower
         image: containrrr/watchtower
         restart_policy: always
+        env:
+          REPO_USER: "{{ lookup('env', 'GTH_USERNAME') }}"
+          REPO_PASS: "{{ lookup('env', 'GTH_ACCESS_TOKEN') }}"
         command: "{{container_name}} --cleanup --interval 10"
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock
