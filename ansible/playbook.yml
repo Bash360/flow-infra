@@ -27,6 +27,13 @@
         name: docker 
         state: started
         enabled: yes
+        
+    - name: Login to GitHub Container Registry
+      community.docker.docker_login:
+       registry_url: ghcr.io
+       username: GTH_USERNAME
+       password: GT_ACCESS_TOKEN
+
     - name: Create placeholder app container
       docker_container:
        name: "{{container_name}}"
