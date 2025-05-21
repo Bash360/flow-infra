@@ -4,13 +4,13 @@
   gather_facts: false
   vars:
     container_name: flow-bank
-    image_name: ghcr.io/flow-bank:latest
+    image_name: ghcr.io/bash360/flowbank:latest
   tasks:
   
     - name: Wait for the instance to be ready for SSH
       ansible.builtin.wait_for_connection:
-        timeout: 300  # Wait up to 5 minutes
-        delay: 10     # Wait 10s before first check
+        timeout: 150 
+        delay: 10     
 
 
     - name: update apt cache
@@ -34,12 +34,12 @@
        username: "{{ lookup('env', 'GTH_USERNAME') }}" 
        password: "{{ lookup('env', 'GTH_ACCESS_TOKEN') }}" 
 
-    - name: Create placeholder app container
+    - name: Create app container and run
       docker_container:
        name: "{{container_name}}"
        image: "{{image_name}}"
        restart_policy: always
-       state: stopped
+       state: started
        env:
           NODE_ENV: "{{ lookup('env', 'NODE_ENV') }}"
           PORT: "{{ lookup('env', 'PORT') }}"

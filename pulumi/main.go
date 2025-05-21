@@ -55,7 +55,7 @@ func main() {
 		}
 
 	
-		sg, err := ec2.NewSecurityGroup(ctx, "ssh-secgroup", &ec2.SecurityGroupArgs{
+		sg, err := ec2.NewSecurityGroup(ctx, "app_sg", &ec2.SecurityGroupArgs{
 			Ingress: ec2.SecurityGroupIngressArray{
 				&ec2.SecurityGroupIngressArgs{
 					Protocol:   pulumi.String("tcp"),
@@ -63,6 +63,14 @@ func main() {
 					ToPort:     pulumi.Int(22),
 					CidrBlocks: pulumi.StringArray{pulumi.String("0.0.0.0/0")},
 				},
+
+				&ec2.SecurityGroupIngressArgs{
+	Protocol:   pulumi.String("tcp"),
+	FromPort:   pulumi.Int(3000),
+	ToPort:     pulumi.Int(3000),
+	CidrBlocks: pulumi.StringArray{pulumi.String("0.0.0.0/0")},
+},
+
 			},
 			 Egress: ec2.SecurityGroupEgressArray{
         &ec2.SecurityGroupEgressArgs{
